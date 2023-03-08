@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+
+{% block title %}Cart{% endblock %}
+{% load static %}
+
+{% block style %}
+<!-- <link rel="stylesheet" href="{% static '/css/products.css'%}"> -->
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+   
+    <div class="view">
+        
+    <h5>{{products.name}}</h5>
+    <h6>{{products.price}}</h6>
+    <h6>{{products.category}}</h6>
+    <img style="width: 500px;" src="{{products.image.url}}" alt="">
+    
+    {% if user.is_authenticated%}
+    {% if user.id == products.user.id%}
+    <a href="/product-edit/{{products.id}}"class="btn btn-success btn-block btn-lg">Edit</a>
+    <a href="/product-delete/{{products.id}}"class="btn btn-success btn-block btn-lg">Delete</a>
+   
+    {% endif%}
+    {% endif%}
+    </div>
+</div>
+
+{% endblock %}

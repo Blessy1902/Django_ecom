@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %}Cart{% endblock %}
+{% load static %}
+
+{% block style %}
+
+
+{% endblock %}
+
+
+
+{% block content %}
+{% load humanize %}
+{% load custom_filters %}
+
+
+  <h1  style="color: white;">Cart</h1>
+  <table class="table" style="color: white;">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+        <tr>
+          <td>
+            <form action="" enctype="multipart/form-data">{{ item.product.image }}</form>
+          </td>
+          <td>{{ item.product.name }}</td>
+          <td>
+            <form method="POST" action="{% url 'update-cart' item.product.id %}">
+              {% csrf_token %}
+              <input type="number" name="quantity" value="{{ item.quantity }}">
+              <button type="submit" class="btn btn-sm btn-primary">Update</button>
+            </form>
+          </td>
+          <td>{{ item.product.price }}</td>
+          <td>{{ item.product.price|floatformat:2|intcomma }} * {{ item.quantity }} = {{ item.product.price|mul:item.quantity|floatformat:2|intcomma }}</td>
+
+          <td>
+            <a href="{% url 'remove-from-cart' item.id %}" class="btn btn-sm btn-danger">Remove</a>
+          </td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><strong>Total:</strong></td>
+        <td><strong>{{ total_price }}</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="{% url 'checkout' %}" class="btn btn-primary">Checkout</a>
+
+
+
+{% endblock %}

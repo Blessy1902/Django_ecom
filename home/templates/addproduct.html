@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+
+{% block title %}addproduct{% endblock %}
+{% load static %}
+
+{% block style %}
+<!-- <link rel="stylesheet" href="{% static '/css/products.css'%}"> -->
+<style>
+  
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<h1 class="d-flex justify-content-center" style="color: aliceblue;">Add Post</h1><hr>
+<div class="d-flex justify-content-center" style="color: azure;">
+
+
+
+    <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" >Add</button>
+    </form>
+
+</div>
+{% endblock %}

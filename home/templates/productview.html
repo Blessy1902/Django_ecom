@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Item {% endblock %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static '/products.css'%}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col" style="color: white; padding-left: 10%; padding-top: 10%;">
+            <h5>{{ products.name }}</h5>
+            <h6>{{ products.price }}</h6>
+            <h6>{{ products.category }}</h6>
+            {% if user.is_authenticated %}
+            {% if user.id == products.user.id %}
+            <a href="/product-edit/{{ products.id }}" class="btn btn-success btn-block btn-lg">Edit</a>
+            <a href="/product-delete/{{ products.id }}" class="btn btn-success btn-block btn-lg">Delete</a>
+            {% endif %}
+            {% endif %}
+            <hr>
+            <form method="post" action="{% url 'add-to-cart' products.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Add to Cart</button>
+            </form>
+
+        </div>
+
+        <div class="col">
+            <img style="width: 250px;padding: 2%;" src="{{ products.image.url }}" alt="">
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

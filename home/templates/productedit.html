@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Item {% endblock %}
+{% load static %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container">
+   
+
+    <form action="/product-editsave/"  method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- {{form.as_p}} -->
+        {{form.name}} <br>
+        {{form.price}} <br>
+        {{form.category}} <br>
+        {{form.image}} <br>
+        {{form.user}}
+        <!-- <a href="/product-view/{{item.id}}"class="btn btn-success btn-block btn-lg">Apply changes</a>
+         -->
+            
+        <input type="submit">
+
+        
+    </form>
+</div>
+
+
+
+{% endblock %}

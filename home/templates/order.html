@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Cart{% endblock %}
+{% load static %}
+
+{% block style %}
+
+
+{% endblock %}
+
+
+{% block content %}
+{% load humanize %}
+{% load custom_filters %}
+
+
+<h1 style="color: white;">Order #{{ order.id }}</h1>
+<h2 style="color: white;">Order Items:</h2>
+<table class="table" style="color: white;">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in order.items.all %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.product.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.product.price|floatformat:2|intcomma }} * {{ item.quantity }} = {{ item.product.price|mul:item.quantity|floatformat:2|intcomma }}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="3"><strong>Total:</strong></td>
+      <td><strong>${{ order.total_price }}</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>{{ order.shipping_address }}</p>
+
+{% endblock %}

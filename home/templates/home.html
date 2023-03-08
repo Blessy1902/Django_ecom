@@ -1,0 +1,91 @@
+{% extends 'base.html'%}
+
+
+{% block title %}PRODUCTS {% endblock %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static '/css/home.css'%}">
+
+{% endblock %}
+
+{% block content %}
+<br><br>
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center"
+    style="background: url(https://thumbs.dreamstime.com/b/e-commerce-business-online-digital-internet-shopping-concept-virtual-screen-208785477.jpg); background-repeat: no-repeat ; background-position: center; height: 10cm; width: 100% ; border-style: solid; border-color: rgb(0, 0, 0); padding-right:5%;">
+    
+</div>
+
+<br><br>
+<div class="container">
+    <div class="row mt-3">
+        {% for item in prdct %}
+
+        <div class="col-md-6 col-lg-4 col-xl-3">
+
+            <div class="card m-3" style="width: 12rem;">
+                
+                <div class="d-flex justify-content-center">
+                    <a href="/productview/{{item.id}}">
+                    <img src="{{item.image.url}}" class="card-img-top" alt="..." style="width: 100px; height: 150px;">
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ item.category }}</li>
+                        <li class="list-group-item">{{ item.price }}</li>
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <!-- <a href="/productview/{{item.id}}" class="btn btn-success btn-block btn-lg">view details</a> -->
+                        <form method="post" action="{% url 'add-to-cart' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+  
+
+
+
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination d-flex justify-content-center">
+        {% if prdct.has_previous%}
+        <li class="page-item"><a class="page-link" href="?page={{ prdct.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+
+        {% if prdct.has_previous%}
+        <li class="page-item"><a class="page-link"
+                href="?page={{ prdct.previous_page_number }}">{{prdct.previous_page_number}}</a></li>
+        {% endif %}
+
+        <li class="page-item active"><a class="page-link" href="">{{prdct.number}}</a></li>
+
+
+        {% if prdct.has_next%}
+        <li class="page-item"><a class="page-link"
+                href="?page={{ prdct.next_page_number }}">{{prdct.next_page_number}}</a></li>
+        {% endif %}
+
+        {% if prdct.has_next%}
+        <li class="page-item"><a class="page-link" href="?page={{ prdct.next_page_number }}">Next</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+</div>
+</div>
+
+
+
+{% endblock %}
